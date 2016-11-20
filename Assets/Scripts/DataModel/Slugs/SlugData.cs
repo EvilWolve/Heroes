@@ -18,5 +18,7 @@ namespace Heroes.DataModel.Slugs
             ScriptableObjectUtility.CreateAsset<SlugData>();
         }
 #endif
+
+        public SlugType slugType;
     }
 }

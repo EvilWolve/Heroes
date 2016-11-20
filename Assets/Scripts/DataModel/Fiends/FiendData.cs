@@ -18,5 +18,7 @@ namespace Heroes.DataModel.Fiends
             ScriptableObjectUtility.CreateAsset<FiendData>();
         }
 #endif
+
+        public FiendType fiendType;
     }
 }

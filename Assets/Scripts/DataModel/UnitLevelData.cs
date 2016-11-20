@@ -20,10 +20,10 @@ namespace Heroes.DataModel
         }
 
         [SerializeField]
-        protected float damage;
-        public float GetDamage()
+        protected float attack;
+        public float GetAttack()
         {
-            return this.damage;
+            return this.attack;
         }
 
         [SerializeField]
@@ -41,10 +41,10 @@ namespace Heroes.DataModel
         }
 
         [SerializeField]
-        protected float dodge;
-        public float GetDodge()
+        protected float evasion;
+        public float GetEvasion()
         {
-            return this.dodge;
+            return this.evasion;
         }
 
         [SerializeField]
@@ -59,6 +59,31 @@ namespace Heroes.DataModel
         public float GetGlancingHitModifier()
         {
             return this.glancingHitModifier;
+        }
+
+        public float GetValueForStat(UnitStatType statType)
+        {
+            switch (statType)
+            {
+                case UnitStatType.HEALTH:
+                    return this.health;
+                case UnitStatType.SPEED:
+                    return this.speed;
+                case UnitStatType.ATTACK:
+                    return this.attack;
+                case UnitStatType.DEFENSE:
+                    return this.defense;
+                case UnitStatType.ACCURACY:
+                    return this.accuracy;
+                case UnitStatType.EVASION:
+                    return this.evasion;
+                case UnitStatType.CRITICAL:
+                    return this.criticalHitModifier;
+                case UnitStatType.GLANCING:
+                    return this.glancingHitModifier;
+            }
+
+            return 0f;
         }
     }
 }
