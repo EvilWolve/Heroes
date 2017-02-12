@@ -5,24 +5,22 @@ namespace Heroes.Battle.Units.Effects
 {
     public class BuffEffect : StatusEffect
     {
-        protected UnitStatType affectedStat;
-        protected StatChangeType changeType;
+        protected StatusChange change;
 
         protected int changeId;
         
-        public virtual void Apply(UnitStatController target, float amount, int duration, UnitStatType stat, StatChangeType change)
+        public virtual void Apply(UnitStatController target, StatusChange change, int duration)
         {
-            this.Apply(target, amount, duration);
+            this.Apply(target, change.amount, duration);
 
-            this.affectedStat = stat;
-            this.changeType = change;
+            this.change = change;
 
-            this.changeId = this.targetController.ApplyStatusEffect(this.affectedStat, this.changeType, this.effectAmount);
+            this.changeId = this.targetController.ApplyStatusEffect(this.change.affectedStat, this.change.changeType, this.effectAmount, this.effectDuration);
         }
 
         public override void Cancel()
         {
-            this.targetController.CancelStatusEffect(this.affectedStat, this.changeId);
+            this.targetController.CancelStatusEffect(this.change.affectedStat, this.changeId);
 
             base.Cancel();
         }

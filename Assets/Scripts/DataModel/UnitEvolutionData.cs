@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 
-using Heroes.DataModel.Abilities;
-
 namespace Heroes.DataModel
 {
     [System.Serializable]
@@ -12,9 +10,6 @@ namespace Heroes.DataModel
 
         [SerializeField]
         protected string unitPrefabPath;
-
-        [SerializeField]
-        protected AbilityData[] unitAbilities;
 
         protected GameObject cachedUnitPrefab;
 

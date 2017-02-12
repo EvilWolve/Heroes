@@ -3,9 +3,12 @@ using System.Collections;
 
 namespace Heroes.DataModel.Missions
 {
+    [SerializeField]
     public class MissionEnemyData
     {
-        private SlugType type;
-        private int level;
+        public SlugType type;
+        public int level;
+
+        public int position;
     }
 }

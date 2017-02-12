@@ -7,16 +7,25 @@ namespace Heroes.Battle.Units
     {
         protected UnitStatController statController;
 
+        protected UnitColor color;
+
         public void Init()
         {
-
+            // What else do we want to do here?
 
             this.Setup();
         }
 
         protected virtual void Setup()
         {
+            // TODO: Fetch correct level data
+            //      -> For Fiends: From player inventory
+            //      -> For Slugs: From level config
+        }
 
+        public UnitColor GetColor()
+        {
+            return this.color;
         }
 
         public float GetStat(UnitStatType statType)
@@ -27,6 +36,11 @@ namespace Heroes.Battle.Units
             }
 
             return this.statController.GetStat(statType);
+        }
+
+        public void Die(Unit instigator = null)
+        {
+
         }
     }
 }

@@ -25,6 +25,9 @@ namespace Heroes.DataModel.Missions
         [SerializeField]
         protected List<MissionWaveData> waves;
 
+        [SerializeField]
+        protected List<MissionObjective> objectives;
+
         public int GetLevelIndex()
         {
             return this.levelIndex;

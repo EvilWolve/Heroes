@@ -19,7 +19,7 @@ namespace Heroes.Battle.Units
             this.baseValue = value;
         }
 
-        public int AddStatChange(StatChangeType type, float amount)
+        public int AddStatChange(StatChangeType type, float amount, int duration)
         {
             int id = uniqueIdCounter;
             uniqueIdCounter++;
@@ -27,6 +27,7 @@ namespace Heroes.Battle.Units
             UnitStatChange change = new UnitStatChange(id);
             change.changeType = type;
             change.changeAmount = amount;
+            change.turnsRemaining = duration;
 
             this.changes.Add(change);
 
@@ -56,6 +57,26 @@ namespace Heroes.Battle.Units
             }
 
             return this.currentValue;
+        }
+
+        public void UpdateTurnDurations()
+        {
+            UnitStatChange change = null;
+            bool cancelledSomething = false;
+
+            for (int i = this.changes.Count - 1; i >= 0; i--)
+            {
+                change = this.changes[i];
+                change.turnsRemaining--;
+
+                if(change.turnsRemaining <= 0)
+                {
+                    this.changes.RemoveAt(i);
+                    cancelledSomething = true;
+                }
+            }
+
+            this.hasChanged |= cancelledSomething;
         }
 
         private float RecalculateStat()

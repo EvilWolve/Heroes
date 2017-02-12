@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Heroes.Battle
+﻿namespace Heroes.Battle
 {
     public static class BattleUtils
     {

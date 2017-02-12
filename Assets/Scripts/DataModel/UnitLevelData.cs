@@ -55,17 +55,17 @@ namespace Heroes.DataModel
         }
 
         [SerializeField]
-        protected float glancingHitModifier;
-        public float GetGlancingHitModifier()
+        protected float mitigationModifier;
+        public float GetMitigationModifier()
         {
-            return this.glancingHitModifier;
+            return this.mitigationModifier;
         }
 
         public float GetValueForStat(UnitStatType statType)
         {
             switch (statType)
             {
-                case UnitStatType.HEALTH:
+                case UnitStatType.MAX_HEALTH:
                     return this.health;
                 case UnitStatType.SPEED:
                     return this.speed;
@@ -79,8 +79,8 @@ namespace Heroes.DataModel
                     return this.evasion;
                 case UnitStatType.CRITICAL:
                     return this.criticalHitModifier;
-                case UnitStatType.GLANCING:
-                    return this.glancingHitModifier;
+                case UnitStatType.MITIGATION:
+                    return this.mitigationModifier;
             }
 
             return 0f;

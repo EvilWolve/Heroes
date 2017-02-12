@@ -108,6 +108,7 @@ namespace Heroes.DataModel.Player
         #endregion
 
         public List<PlayerFiendData> ownedFiends;
+        public List<PlayerFiendData> selectedFiends;
 
         // TODO: Store data about:
         // Map progress

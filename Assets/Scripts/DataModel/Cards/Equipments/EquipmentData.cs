@@ -7,16 +7,18 @@ using UnityEditor;
 using Heroes.EditorUtils;
 #endif
 
-namespace Heroes.DataModel.Abilities
+namespace Heroes.DataModel.Cards.Equipments
 {
-    public class AbilityData : ScriptableObject
+
+    public class EquipmentData : ScriptableObject
     {
 #if UNITY_EDITOR
-        [MenuItem("Assets/Create/Ability data")]
+        [MenuItem("Assets/Create/Equipment data")]
         public static void CreateAsset()
         {
-            ScriptableObjectUtility.CreateAsset<AbilityData>();
+            ScriptableObjectUtility.CreateAsset<EquipmentData>();
         }
 #endif
+
     }
 }

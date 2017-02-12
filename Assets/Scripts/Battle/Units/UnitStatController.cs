@@ -8,32 +8,60 @@ namespace Heroes.Battle.Units
 {
     public class UnitStatController
     {
+        private Unit owner;
+
+        // Health is a special case since we split it into "current health" and "max health".
+        // Changes to max health should probably affect the current health?
+        private float currentHealth;
+
         private Dictionary<UnitStatType, UnitStat> unitStats;
 
-        public UnitStatController(UnitLevelData levelData)
+        public UnitStatController(Unit owner, UnitLevelData levelData)
         {
+            this.owner = owner;
+
             this.unitStats = new Dictionary<UnitStatType, UnitStat>();
 
             if(levelData!= null)
             {
-                // TODO: Maybe wrap this in a loop over all enum values?
-                this.unitStats.Add(UnitStatType.HEALTH, new UnitStat(levelData.GetValueForStat(UnitStatType.HEALTH)));
-                this.unitStats.Add(UnitStatType.SPEED, new UnitStat(levelData.GetValueForStat(UnitStatType.SPEED)));
-                this.unitStats.Add(UnitStatType.ATTACK, new UnitStat(levelData.GetValueForStat(UnitStatType.ATTACK)));
-                this.unitStats.Add(UnitStatType.DEFENSE, new UnitStat(levelData.GetValueForStat(UnitStatType.DEFENSE)));
-                this.unitStats.Add(UnitStatType.ACCURACY, new UnitStat(levelData.GetValueForStat(UnitStatType.ACCURACY)));
-                this.unitStats.Add(UnitStatType.EVASION, new UnitStat(levelData.GetValueForStat(UnitStatType.EVASION)));
-                this.unitStats.Add(UnitStatType.CRITICAL, new UnitStat(levelData.GetValueForStat(UnitStatType.CRITICAL)));
-                this.unitStats.Add(UnitStatType.GLANCING, new UnitStat(levelData.GetValueForStat(UnitStatType.GLANCING)));
+                for (int i = 0; i < (int)UnitStatType.LAST; i++)
+                {
+                    this.unitStats.Add((UnitStatType)i, new UnitStat(levelData.GetValueForStat((UnitStatType)i)));
+                }
+
+                this.currentHealth = this.unitStats[UnitStatType.MAX_HEALTH].GetStatValue();
             }
         }
 
-        public int ApplyStatusEffect(UnitStatType statType, StatChangeType changeType, float amount)
+        public void DealDamage(float amount, Unit instigator = null)
+        {
+            this.currentHealth -= amount;
+
+            if(this.currentHealth <= 0f)
+            {
+                this.owner.Die(instigator);
+            }
+        }
+
+        public void RestoreHealth(float amount)
+        {
+            this.currentHealth = Mathf.Clamp(this.currentHealth + amount, 0f, this.GetStat(UnitStatType.MAX_HEALTH));
+        }
+
+        public void StartTurn()
+        {
+            for (int i = 0; i < (int)UnitStatType.LAST; i++)
+            {
+                this.unitStats[(UnitStatType)i].UpdateTurnDurations();
+            }
+        }
+
+        public int ApplyStatusEffect(UnitStatType statType, StatChangeType changeType, float amount, int duration)
         {
             if(this.unitStats != null && this.unitStats.ContainsKey(statType))
             {
                 UnitStat stat = this.unitStats[statType];
-                return stat.AddStatChange(changeType, amount);
+                return stat.AddStatChange(changeType, amount, duration);
             }
 
             return -1;

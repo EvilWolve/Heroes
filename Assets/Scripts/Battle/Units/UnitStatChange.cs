@@ -8,6 +8,8 @@ namespace Heroes.Battle.Units
         public StatChangeType changeType;
         public float changeAmount;
 
+        public int turnsRemaining;
+
         private int changeId;
 
         public UnitStatChange(int id)
